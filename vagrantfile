@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+ 
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/xenial64"
+ 
+    config.vm.define :vagrant do |vagrant_config|
+        vagrant_config.vm.hostname = "magnoliapublic"
+        vagrant_config.vm.network "private_network", ip: "192.168.99.41"
+        vagrant_config.vm.provision :shell, path: "bootstrap.sh"
+    end
+	
+		config.vm.provider "virtualbox" do |v|
+		v.memory = 4096
+		v.cpus = 2
+	end
+ 
+    config.vm.provider :virtualbox do |virtualbox_config|
+        virtualbox_config.name = "Magnolia Public Instance - Ubuntu 16.04 - 99.40"
+    end
+end
