@@ -6,5 +6,7 @@ This project uses vagrant to build a Magnolia CMS public instance vm in VirtualB
 2. Install VirtualBox
 3. Install Vagrant
 4. From your command line, cd to your cloned repo, and enter
+
     vagrant up
+    
 5. When it's finished, you should be able to browse to http://192.168.99.41/ to access Magnolia on your local machine. Unfortunately, publishing from the associated author instance to the this public instance does not currently work (still working through an obscure error with the receiver config and the publishing-core module).
