@@ -74,7 +74,7 @@ echo -e "-- Preparing Magnolia for MySQL Jackrabbit JCR persistence"
 echo -e "-----------------------------------------------------------------------"
 sudo rm -f /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/lib/derby-x.jar
 sudo cp /usr/share/java/mysql.jar /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/lib/
-sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml\n# Location of the file containing both the private and the public keys used to verify authenticity of activation requests\n# This file is generated if not present\nmagnolia.author.key.location=${magnolia.home}/WEB-INF/config/default/magnolia-activation-keypair.properties\n&g' /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/config/default/magnolia.properties
+sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml&g' /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/config/default/magnolia.properties
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia to be a public instance"
