@@ -74,29 +74,29 @@ sudo npm install -y @magnolia/cli -g
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Jumpstarting Magnolia"
 echo -e "-----------------------------------------------------------------------"
-cd /opt
-sudo mkdir magnolia
+sudo mkdir /opt/magnolia
+cd /opt/magnolia
 sudo mgnl jumpstart -w magnolia-community-webapp
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia for MySQL Jackrabbit JCR persistence"
 echo -e "-----------------------------------------------------------------------"
-sudo rm -f /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/derby-x.jar
-sudo cp /usr/share/java/mysql.jar /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/
-sudo sed -i 's&jdbc:mysql://localhost:3306/magnolia&jdbc:mysql://localhost:3306/magnoliapublic&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
-sudo sed -i 's&DataSource name="magnolia"&DataSource name="magnoliapublic"&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
-sudo sed -i 's&"dataSourceName" value="magnolia"&"dataSourceName" value="magnoliapublic"&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
-sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/default/magnolia.properties
+sudo rm -f /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/derby-x.jar
+sudo cp /usr/share/java/mysql.jar /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/
+sudo sed -i 's&jdbc:mysql://localhost:3306/magnolia&jdbc:mysql://localhost:3306/magnoliapublic&g' /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&DataSource name="magnolia"&DataSource name="magnoliapublic"&g' /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&"dataSourceName" value="magnolia"&"dataSourceName" value="magnoliapublic"&g' /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml&g' /opt/magnolia/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/default/magnolia.properties
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia to be a public instance"
 echo -e "-----------------------------------------------------------------------"
-sudo sed -i 's/magnolia.bootstrap.authorInstance=true/magnolia.bootstrap.authorInstance=false/g' /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/config/default/magnolia.properties
+sudo sed -i 's/magnolia.bootstrap.authorInstance=true/magnolia.bootstrap.authorInstance=false/g' /opt/magnolia/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/config/default/magnolia.properties
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia for remote Java debugging"
 echo -e "-----------------------------------------------------------------------"
-cd /opt/apache-tomcat/bin/
+cd /opt/magnolia/apache-tomcat/bin/
 sudo sed -i 's&# exec "$PRGDIR"/catalina.sh jpda start&exec "$PRGDIR"/catalina.sh jpda start&g' magnolia_control.sh
 
 echo -e "-----------------------------------------------------------------------"
