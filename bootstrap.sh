@@ -9,7 +9,7 @@ echo -e "-----------------------------------------------------------------------
 echo -e "-- Updating hosts file for our environment"
 echo -e "-----------------------------------------------------------------------"
 sudo sed -i 's&127.0.1.1&192.168.99.40&g' /etc/hosts
-sudo echo "192.168.99.41	magnoliapublic" >> /etc/hosts
+sudo echo "192.168.99.40	magnoliaauthor" >> /etc/hosts
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Updating packages list"
@@ -119,9 +119,6 @@ sudo apt-get install -y nginx
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Configuring Nginx for SSL"
 echo -e "-----------------------------------------------------------------------"
-sudo sed -i 's&# listen 443 ssl default_server;&listen 443 ssl default_server;&g' /etc/nginx/sites-available/default
-sudo sed -i 's&# listen \[::\]:443 ssl default_server;&listen \[::\]:443 ssl default_server;&g' /etc/nginx/sites-available/default
-sudo sed -i 's&# include snippets/snakeoil.conf;&include snippets/snakeoil.conf;&g' /etc/nginx/sites-available/default
 sudo sed -i 's&ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;&ssl_certificate /etc/ssl/certs/nginx-selfsigned.cert;&g' /etc/nginx/snippets/snakeoil.conf
 sudo sed -i 's&ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;&ssl_certificate_key /etc/ssl/private/nginx-selfsigned.crt;&g' /etc/nginx/snippets/snakeoil.conf
 
