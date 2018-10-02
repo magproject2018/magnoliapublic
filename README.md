@@ -1,6 +1,6 @@
 # magnoliapublic
 
-This project uses vagrant to build a Magnolia CMS public instance vm in VirtualBox which uses Nginx as a reverse proxy for Magnolia's Tomcat, SSL enabled, configured for remote Java debugging, and using MySQL for Magnolia Jackrabbit JCR persistence. When running this and https://github.com/magproject2018/magnoliaauthor, you will (mostly) have a disposable Magnolia dev environment.
+This project uses vagrant to build a Magnolia CMS public instance vm in VirtualBox which uses Nginx as a reverse proxy for Magnolia's Tomcat, SSL enabled, configured for remote Java debugging, and using MySQL for Magnolia Jackrabbit JCR persistence. When running this and https://github.com/magproject2018/magnoliaauthor, you will have a disposable Magnolia dev environment.
 
 1. Clone this repo
 2. Install VirtualBox
@@ -9,4 +9,4 @@ This project uses vagrant to build a Magnolia CMS public instance vm in VirtualB
 
     vagrant up
     
-5. When it's finished, you should be able to browse to http://192.168.99.41/ to access Magnolia on your local machine. Unfortunately, publishing from the associated author instance to the this public instance does not currently work (still working through an obscure error with the receiver config and the publishing-core module).
+5. When it's finished, you should be able to browse to http://192.168.99.41/ to access Magnolia on your local machine.
