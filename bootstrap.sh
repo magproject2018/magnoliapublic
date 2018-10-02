@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
- 
+
 # BEGIN ########################################################################
 echo -e "-- ------------------ --\n"
 echo -e "-- BEGIN BOOTSTRAPING --\n"
 echo -e "-- ------------------ --\n"
- 
+
 # BOX ##########################################################################
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Updating hosts file for our environment"
@@ -23,13 +23,13 @@ echo -e "-- Updating Java packages list"
 echo -e "-----------------------------------------------------------------------"
 sudo add-apt-repository ppa:openjdk-r/ppa
 sudo apt-get -y update
- 
+
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Installing Java"
 echo -e "-----------------------------------------------------------------------"
 sudo apt-get install -y openjdk-9-jre
 sudo apt-get install -y openjdk-9-jdk
- 
+
 # NODE.JS ##########################################################################
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Installing Node.js"
@@ -48,8 +48,18 @@ sudo -E apt-get -q -y install mysql-server
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing MySQL root user permissions and an empty Magnolia schema"
 echo -e "-----------------------------------------------------------------------"
-sudo mysql -u root -e "drop user 'root'@'localhost';create user 'root'@'%' identified by '';create schema magnolia;grant all privileges on *.* to 'root'@'%' with grant option;flush privileges"
+sudo mysql -u root -e "drop user 'root'@'localhost';create user 'root'@'%' identified by '';create schema magnoliaauthor;create schema magnoliapublic;grant all privileges on *.* to 'root'@'%' with grant option;flush privileges"
 sudo mysqladmin -u root password password
+
+echo -e "-----------------------------------------------------------------------"
+echo -e "-- Adjusting mysqld.cnf"
+echo -e "-----------------------------------------------------------------------"
+sudo sed -i 's&max_allowed_packet      = 16M&max_allowed_packet      = 32M\nwait_timeout      = 86400\ninteractive_timeout      = 86400&g' /etc/mysql/mysql.conf.d/mysqld.cnf
+
+echo -e "-----------------------------------------------------------------------"
+echo -e "-- Restarting MySQL"
+echo -e "-----------------------------------------------------------------------"
+sudo service mysql restart
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Installing libmysql-java"
@@ -72,9 +82,12 @@ sudo mgnl jumpstart -w magnolia-community-webapp
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia for MySQL Jackrabbit JCR persistence"
 echo -e "-----------------------------------------------------------------------"
-sudo rm -f /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/lib/derby-x.jar
-sudo cp /usr/share/java/mysql.jar /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/lib/
-sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml&g' /opt/apache-tomcat/webapps/magnoliaAuthor/WEB-INF/config/default/magnolia.properties
+sudo rm -f /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/derby-x.jar
+sudo cp /usr/share/java/mysql.jar /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/lib/
+sudo sed -i 's&jdbc:mysql://localhost:3306/magnolia&jdbc:mysql://localhost:3306/magnoliapublic&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&DataSource name="magnolia"&DataSource name="magnoliapublic"&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&"dataSourceName" value="magnolia"&"dataSourceName" value="magnoliapublic"&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+sudo sed -i 's&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-h2-search.xml&magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml&g' /opt/apache-tomcat/webapps/magnoliaPublic/WEB-INF/config/default/magnolia.properties
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Preparing Magnolia to be a public instance"
@@ -188,8 +201,8 @@ server {
         #location ~ /\.ht {
         #       deny all;
         #}
-}
 
+}
 
 # Virtual Host configuration for example.com
 #
