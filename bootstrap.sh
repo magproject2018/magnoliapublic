@@ -11,17 +11,12 @@ echo -e "-----------------------------------------------------------------------
 sudo sed -i 's&127.0.1.1&192.168.99.40&g' /etc/hosts
 sudo echo "192.168.99.40	magnoliaauthor" >> /etc/hosts
 
-echo -e "-----------------------------------------------------------------------"
-echo -e "-- Updating packages list"
-echo -e "-----------------------------------------------------------------------"
-sudo apt-get update -y
-
 # JAVA #######################################################################
 echo -e "-----------------------------------------------------------------------"
-echo -e "-- Updating Java packages list"
+echo -e "-- Adding Java repository and updating packages list"
 echo -e "-----------------------------------------------------------------------"
 sudo add-apt-repository ppa:openjdk-r/ppa
-sudo apt-get -y update
+sudo apt-get update -y
 
 echo -e "-----------------------------------------------------------------------"
 echo -e "-- Installing Java"
